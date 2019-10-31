@@ -12,8 +12,9 @@ const Time = props => {
             <Text>{'Time' + props.time}</Text>
             <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                        value={text}
+                       defaultValue={props.something}
                        onChangeText={text => setText(text)}/>
-            <Button title={"Send"} onPress={() => props.sendText(text)}/>
+            <Button className="send-button" title={"Send"} onPress={() => props.sendText(text)}/>
         </View>
     );
 };
@@ -21,7 +22,8 @@ const Time = props => {
 Time.propTypes = {
     time: PropTypes.string,
     startTime: PropTypes.func,
-    sendText: PropTypes.func
+    sendText: PropTypes.func,
+    something: PropTypes.string
 };
 
 export default Time;

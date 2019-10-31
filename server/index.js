@@ -15,14 +15,6 @@ app.get('/ping', (req, res) => {
   res.send('pong');
 });
 
-app.get('/time', (req, res) => {
-  const currentTime = moment();
-
-  socketServer.sendTime();
-
-  res.send(`${JSON.stringify({"time": currentTime})}`);
-});
-
 let server = app.listen(port, () => console.log(`Listening at port ${port}`));
 
 socketServer = new SocketServer(server);

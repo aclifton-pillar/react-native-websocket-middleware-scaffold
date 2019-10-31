@@ -33,6 +33,11 @@ class SocketServer {
             JSON.stringify({time: moment().toString()})));
     }
 
+    sendMessage(message) {
+        this._timeClients.forEach(
+            client => client.send(JSON.stringify({message: message})));
+    }
+
     registerClient(ws, name) {
         console.log('connected client');
         ws.on('close', this.disconnect(ws));
