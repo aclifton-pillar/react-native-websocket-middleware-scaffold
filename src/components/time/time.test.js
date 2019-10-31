@@ -2,6 +2,9 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import * as sinon from "sinon";
 import Time from "./time";
+import Chance from 'chance';
+
+const chance = new Chance();
 
 describe("Time", () => {
     let time;
@@ -9,11 +12,20 @@ describe("Time", () => {
     const sendAC = sinon.spy();
 
     const properties = {
+        time: chance.string(),
         sendText: sendAC,
     };
 
     beforeEach(() => {
         time = shallow(<Time {...properties} />);
+    });
+
+    describe("time", () => {
+        test("should display time", () => {
+            const timeDisplay = time.find('.time');
+
+            expect(timeDisplay.childAt(0).text()).toContain(properties.time);
+        });
     });
 
     describe("send button", () => {

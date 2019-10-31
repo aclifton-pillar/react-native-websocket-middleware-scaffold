@@ -9,7 +9,7 @@ const Time = props => {
         <View>
             <Text>Hello</Text>
             <Button title={"Start"} onPress={() => props.startTime()}/>
-            <Text>{'Time' + props.time}</Text>
+            <Text className="time">{'Time' + props.time}</Text>
             <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                        value={text}
                        defaultValue={props.something}
