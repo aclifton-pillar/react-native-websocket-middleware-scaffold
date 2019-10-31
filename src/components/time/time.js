@@ -3,7 +3,7 @@ import {Button, Text, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {TextInput} from 'react-native';
 
-const TimeContainer = props => {
+const Time = props => {
     const [text, setText] = React.useState('');
     return (
         <View>
@@ -18,10 +18,10 @@ const TimeContainer = props => {
     );
 };
 
-TimeContainer.propTypes = {
+Time.propTypes = {
     time: PropTypes.string,
     startTime: PropTypes.func,
     sendText: PropTypes.func
 };
 
-export default TimeContainer;
+export default Time;

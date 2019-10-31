@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
-import TimeProvider from "./src/views/time/time-provider";
+import MainProvider from "./src/views/main/main-provider";
 
-AppRegistry.registerComponent(appName, () => TimeProvider);
+AppRegistry.registerComponent(appName, () => MainProvider);
 
