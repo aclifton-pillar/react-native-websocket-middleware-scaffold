@@ -28,6 +28,20 @@ describe("Websocket Middleware", () => {
         expect(middlewareResponse).not.toBeNull();
     });
 
+    describe("WS_CONNECT", () => {
+        test("should dispatch WS_CONNECTED when connected", async () => {
+            const store = { dispatch: sinon.spy() };
+            const next = sinon.stub();
+            const expected = { type: 'WS_CONNECTED', host: 'ws://10.0.2.2:3000/' };
+
+            webSocketMiddle(store)(next)({type: WS_CONNECT, host: 'ANYTHING'});
+            await server.connected;
+
+            let firstCallFirstArg = store.dispatch.args[0][0];
+            expect(firstCallFirstArg).toEqual(expected);
+        });
+    });
+
     describe("WS_SEND", () => {
         test("should return next(action) when action is WS_SEND", async () => {
             const store = { dispatch: sinon.stub() };
