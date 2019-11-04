@@ -2,7 +2,7 @@ import webSocketMiddle from './middleware';
 import * as sinon from "sinon";
 import WS from "jest-websocket-mock";
 import Chance from 'chance';
-import {WS_CONNECT} from "./actions";
+import {WS_CONNECT, WS_DISCONNECT} from "./actions";
 
 const server = new WS("ws://10.0.2.2:3000");
 
@@ -40,6 +40,23 @@ describe("Websocket Middleware", () => {
             let firstCallFirstArg = store.dispatch.args[0][0];
             expect(firstCallFirstArg).toEqual(expected);
         });
+    });
+
+    describe("WS_DISCONNECT", () => {
+       test("should dispatch WS_DISCONNECTED when disconnected", async () => {
+           const store = { dispatch: sinon.spy() };
+           const next = sinon.stub();
+           const expected = { type: 'WS_DISCONNECTED', host: 'ws://10.0.2.2:3000/' };
+
+           webSocketMiddle(store)(next)({type: WS_CONNECT, host: 'ANYTHING'});
+           await server.connected;
+
+           webSocketMiddle(store)(next)({type: WS_DISCONNECT, host: 'ANYTHING'});
+            await server.closed;
+
+           let secondCallFirstArg = store.dispatch.args[1][0];
+           expect(secondCallFirstArg).toEqual(expected);
+       });
     });
 
     describe("WS_SEND", () => {

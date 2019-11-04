@@ -18,7 +18,7 @@ const webSocketMiddle = () => {
     };
 
     const onClose = store => event => {
-        store.dispatch(wsDisconnected());
+        store.dispatch(wsDisconnected(event.target.url));
     };
 
     const onMessage = store => event => {
