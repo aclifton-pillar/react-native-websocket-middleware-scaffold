@@ -1,7 +1,10 @@
 import webSocketMiddle from './middleware';
 import * as sinon from "sinon";
+import WS from "jest-websocket-mock";
 import Chance from 'chance';
 import {WS_CONNECT} from "./actions";
+
+const server = new WS("ws://10.0.2.2:3000");
 
 const chance = new Chance();
 
@@ -25,23 +28,41 @@ describe("Websocket Middleware", () => {
         expect(middlewareResponse).not.toBeNull();
     });
 
-    test("should return next(action) when action is WS_SEND", () => {
-        const store = {};
-        const next = sinon.spy();
-        const action = {
-            type: 'WS_SEND',
-            msg: chance.string()
-        };
+    describe("WS_SEND", () => {
+        test("should return next(action) when action is WS_SEND", async () => {
+            const store = { dispatch: sinon.stub() };
+            const next = sinon.spy();
+            const action = {
+                type: 'WS_SEND',
+                msg: chance.string()
+            };
 
-        webSocketMiddle(store)(next)({type: WS_CONNECT});
+            webSocketMiddle(store)(next)({type: WS_CONNECT});
 
-        const middlewareResponse = webSocketMiddle(store)(next)(action);
+            await server.connected;
 
-        expect(middlewareResponse).not.toBeNull();
-        expect(next.calledWithExactly(action)).toEqual(true);
-    });
+            const middlewareResponse = webSocketMiddle(store)(next)(action);
 
-    test("should not try to send when no connection has been established", () => {
-        // https://stackoverflow.com/questions/42867183/mocking-websocket-in-jest
+            expect(middlewareResponse).not.toBeNull();
+            expect(next.calledWithExactly(action)).toEqual(true);
+        });
+
+        test("should not try to send when no connection has been established", () => {
+            const store = {};
+            const next = sinon.spy();
+            const action = {
+                type: 'WS_SEND',
+                msg: chance.string()
+            };
+
+            // Do not connect
+            // webSocketMiddle(store)(next)({type: WS_CONNECT});
+            // await server.connected;
+
+            const middlewareResponse = webSocketMiddle(store)(next)(action);
+
+            expect(middlewareResponse).not.toBeNull();
+            expect(server).not.toHaveReceivedMessages([action]);
+        });
     });
 });

@@ -30,8 +30,10 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "jest": "24.9.0",
+    "jest-websocket-mock": "^1.5.1",
     "jetifier": "^1.6.4",
     "metro-react-native-babel-preset": "0.56.0",
+    "mock-socket": "^9.0.2",
     "react-test-renderer": "16.9.0",
     "sinon": "^7.5.0"
   },
