@@ -6,7 +6,7 @@ import {TextInput} from 'react-native';
 const Time = props => {
     const [text, setText] = React.useState('');
     return (
-        <View>
+        <View style = {{marginTop: 100}}>
             <Text>Hello</Text>
             <Button title={"Start"} onPress={() => props.startTime()}/>
             <Text className="time">{'Time' + props.time}</Text>

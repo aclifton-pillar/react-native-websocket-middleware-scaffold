@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import {WS_SEND, wsConnect} from "../../../websocket-middleware/actions";
 
 export const getTime = () => {
@@ -8,7 +9,7 @@ export const getTime = () => {
 
 export const startTime = () => {
     return dispatch => {
-        dispatch(wsConnect('ws://10.0.2.2:3000'));
+        dispatch(wsConnect(Platform.OS === 'ios' ? "ws://localhost:3000": "ws://10.0.2.2:3000"));
         return null;
     }
 };

@@ -9,6 +9,7 @@ import {
     wsConnected,
     wsDisconnected
 } from "./actions";
+import {Platform} from 'react-native';
 
 const webSocketMiddle = () => {
     let socket = null;
@@ -38,7 +39,7 @@ const webSocketMiddle = () => {
     return store => next => action => {
         const connect = (action) => {
             closeExisting();
-            socket = new WebSocket('ws://10.0.2.2:3000');
+            socket = new WebSocket(Platform.OS === 'ios' ? "ws://localhost:3000": "ws://10.0.2.2:3000");
             socket.onmessage = onMessage(store);
             socket.onclose = onClose(store);
             socket.onopen = onOpen(store)
